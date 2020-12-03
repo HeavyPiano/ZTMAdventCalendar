@@ -1,27 +1,24 @@
 # set variables here
 
 slope = [[1, 1], [3, 1], [5, 1], [7, 1], [1, 2]]  # x, y
-height = 0
 tree_count = 0
 tree_total = 0
 
 
-# set map height here
+# set map height and width here
 
 f = open('data.txt', 'r')
-for line in f:
-    height += 1
-
-# calculate max distance needed to cover
-
-distance = height*max(slope)[0]
+map = f.readlines()
+map_width = len(map[0]) - 1
+del f
 
 # find x to search for tree
 
 
 def x_coordinator(i, y):
     x = int(y * (slope[i][0]/slope[i][1]))
-    return x
+    looped_x = x % map_width
+    return looped_x
 
 # feed x and current height
 
@@ -38,14 +35,9 @@ def tree_checker(x, reading_line):
 
 def map_generator(gradient):
     tree_multiplier = 0
-    g = open('data.txt', 'r')
-    for y, line in enumerate(g):
-        reading_line = []
-        lines_stripped = line.strip()
+    for y, line in enumerate(map):
         if y % slope[i][1] == 0:
-            while len(reading_line) < distance:
-                reading_line.extend(lines_stripped)
-            if tree_checker(x_coordinator(gradient, y), reading_line):
+            if tree_checker(x_coordinator(gradient, y), line.strip()):
                 tree_multiplier += 1
     return tree_multiplier
 
@@ -57,7 +49,7 @@ while i < len(slope):
     if tree_count == 0:
         tree_count = map_generator(i)
     else:
-        tree_count = tree_count * int(map_generator(i))
+        tree_count *= map_generator(i)
     i += 1
 
 
