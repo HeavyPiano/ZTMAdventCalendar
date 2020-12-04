@@ -1,3 +1,4 @@
+import re
 f = open('data.txt', 'r')
 passport_data = f.readlines()
 required_fields = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid']
@@ -31,6 +32,7 @@ def passport_formatter(stack):  # remove newline
 def passport_validator(passport):
     def byr_check(value):
         if 1920 <= int(value) <= 2002:
+            # print(value)
             return True
         else:
             return False
@@ -59,8 +61,8 @@ def passport_validator(passport):
 
     def hcl_check(value):
         accepted_values = ['0', '1', '2', '3', '4', '5', '6',
-                           '7', '8', '9', '0', 'a', 'b', 'c', 'd', 'e', 'f']
-        if '#' in value[0]:
+                           '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f']
+        if value[0] == '#':
             value = value.strip('#')
             if len(value) != 6:
                 return False
@@ -76,20 +78,24 @@ def passport_validator(passport):
         accepted_colours = ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth']
         if len(value) != 3:
             return False
-        else:
+        elif len(value) == 3:
             if value in accepted_colours:
                 return True
             return False
+        else:
+            return False
 
     def pid_checker(value):
-        if len(value) == 9:
-            print(value)
+        if len(value) == 9 and value.isdigit():
+            # print(value)
             return True
-        return False
+        else:
+            return False
 
     byr_value = passport.get('byr')
     if byr_check(byr_value) == False:
         return False
+
     iyr_value = passport.get('iyr')
     if iyr_check(iyr_value) == False:
         return False
@@ -113,12 +119,13 @@ def passport_validator(passport):
     pid_value = passport.get('pid')
     if pid_checker(pid_value) == False:
         return False
-    print(passport)
+    # print(passport)
     return True
 
 
 def passport_checker(formatted):
     valids_counter = 0
+    passport_counted = 0
     for passport in formatted:
         passport_dict = {}
         for pair in passport:
@@ -126,9 +133,10 @@ def passport_checker(formatted):
             passport_dict[key_value[0]] = key_value[1]
 
         if all(i in passport_dict.keys() for i in required_fields):
-            if passport_validator(passport_dict) == True:
+            passport_counted += 1
+            if passport_validator(passport_dict):
                 valids_counter += 1
-    print(valids_counter)
+    print(valids_counter, passport_counted)
 
 
 passport_checker(passport_formatter(passport_splitter(passport_data)))
