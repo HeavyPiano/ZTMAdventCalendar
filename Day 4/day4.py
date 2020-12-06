@@ -1,4 +1,4 @@
-import re
+# import re whats regex lol
 f = open('data.txt', 'r')
 passport_data = f.readlines()
 required_fields = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid']
@@ -34,20 +34,18 @@ def passport_validator(passport):
         if 1920 <= int(value) <= 2002:
             # print(value)
             return True
-        else:
-            return False
+        return False
 
     def iyr_check(value):
         if 2010 <= int(value) <= 2020:
             return True
-        else:
-            return False
+        return False
 
     def eyr_check(value):
         if 2020 <= int(value) <= 2030:
             return True
-        else:
-            return False
+
+        return False
 
     def hgt_check(value):
         if 'cm' in value:
@@ -56,8 +54,7 @@ def passport_validator(passport):
         elif 'in' in value:
             if 59 <= int(value.strip('in')) <= 76:
                 return True
-        else:
-            return False
+        return False
 
     def hcl_check(value):
         accepted_values = ['0', '1', '2', '3', '4', '5', '6',
@@ -71,8 +68,7 @@ def passport_validator(passport):
                     if i not in accepted_values:
                         return False
                 return True
-        else:
-            return False
+        return False
 
     def ecl_check(value):
         accepted_colours = ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth']
@@ -82,15 +78,13 @@ def passport_validator(passport):
             if value in accepted_colours:
                 return True
             return False
-        else:
-            return False
+        return False
 
     def pid_checker(value):
         if len(value) == 9 and value.isdigit():
             # print(value)
             return True
-        else:
-            return False
+        return False
 
     byr_value = passport.get('byr')
     if byr_check(byr_value) == False:
