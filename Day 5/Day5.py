@@ -57,9 +57,9 @@ for i in tickets_stack:
 seat_ids.sort()
 
 i = 0
-while i < len(seat_ids):
+while i < len(seat_ids) - 1:
     if seat_ids[i+1] - seat_ids[i] != 1:
-        print(seat_ids[i])
+        print(f'My seat is between {seat_ids[i]} and {seat_ids[i+1]}.')
     i += 1
 
 
