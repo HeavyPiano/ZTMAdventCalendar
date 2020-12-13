@@ -55,6 +55,7 @@ for i in tickets_stack:
     seat_ids.append(seat[0]*8 + seat[1])
 
 seat_ids.sort()
+print(seat_ids)
 
 i = 0
 while i < len(seat_ids) - 1:

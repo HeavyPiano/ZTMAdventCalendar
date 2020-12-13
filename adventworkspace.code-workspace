@@ -5,6 +5,7 @@
     }
   ],
   "settings": {
-    "python.pythonPath": "C:\\Users\\pakhe\\AppData\\Local\\Programs\\Python\\Python39\\python.exe"
+    "python.pythonPath": "C:\\Users\\Pak-Hei\\AppData\\Local\\Programs\\Python\\Python39\\python.exe",
+    "platformio-ide.useBuiltinPython": false
   }
 }
